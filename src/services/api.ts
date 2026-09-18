@@ -7,6 +7,8 @@ import axios from "axios";
 //   baseURL: "http://localhost:4000/api/v1",
 // });
 
+//checks
+
 const api = axios.create({
   baseURL: "https://api.ekalakaar.com/api/v1",
 });
