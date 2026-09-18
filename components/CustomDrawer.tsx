@@ -164,7 +164,7 @@ export default function CustomDrawer(props: any) {
       // );
 
       const response = await fetch(
-        "https://api.ekalakaar.com/api/v1/artists/profile",
+        "https://api.ekalakaar.com/api/v1/artists/profile/69cd062aed280923ebfe8666",
         {
           method: "GET",
           headers: {
