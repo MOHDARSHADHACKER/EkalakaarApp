@@ -255,6 +255,8 @@
 //   contactText: { marginLeft: 12, fontSize: 15, color: "#222" },
 // });
 
+//contact
+
 // app/contact.tsx
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
