@@ -294,16 +294,15 @@
 //   },
 // });
 
+import api from "@/src/services/api";
 import { Ionicons } from "@expo/vector-icons";
-import { Share } from "react-native";
-import { useNavigation, useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams, useNavigation } from "expo-router";
 import React from "react";
 import {
-  ScrollView,
-  StyleSheet,
+  Alert, ScrollView, Share, StyleSheet,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -335,7 +334,32 @@ ${item.description || "No description available."}
   }
 };
 
+const handleSaveOpportunity = async () => {
+ 
+//  setLoading(true);
+  try {
+    const res = await api.post(
+      `/artists/saved-opportunities/${item._id}`
+    );
 
+    Alert.alert("Success", res.data?.message || "Opportunity saved successfully");
+    // router.replace("/SignIn");
+  } catch (error: any) {
+    if (error.response) {
+      Alert.alert(
+        "Error",
+        error.response.data?.message || "Failed to save opportunity"
+      );
+    } else {
+      Alert.alert(
+        "Error",
+        error.message || "An unexpected error occurred"
+      );
+    }
+  } finally {
+   // setLoading(false);
+  }
+};
 
 
   return (
@@ -353,7 +377,7 @@ ${item.description || "No description available."}
           <Text style={styles.title}>{item.purpose || item.title || "Opportunity Title"}</Text>
           
           <View style={styles.actionButtons}>
-            <TouchableOpacity style={styles.saveBtn}>
+            <TouchableOpacity style={styles.saveBtn} onPress={handleSaveOpportunity}>
               <Text style={styles.saveBtnText}>Save</Text>
             </TouchableOpacity>
            <TouchableOpacity style={styles.shareBtn} onPress={shareHandler}>
