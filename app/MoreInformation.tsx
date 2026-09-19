@@ -28,7 +28,7 @@
 //         {/* Title Section */}
 //         <View style={styles.titleSection}>
 //           <Text style={styles.title}>{item.title || "Opportunity Title"}</Text>
-          
+
 //           <View style={styles.actionButtons}>
 //             <TouchableOpacity style={styles.saveBtn}>
 //               <Text style={styles.saveBtnText}>Save</Text>
@@ -62,7 +62,7 @@
 //         {/* Roles, Skills and Other Information */}
 //         <View style={styles.section}>
 //           <Text style={styles.sectionTitle}>Roles, Skills and Other Information</Text>
-          
+
 //           <View style={styles.detailRow}>
 //             <Text style={styles.detailLabel}>Nature of art:</Text>
 //             <Text style={styles.detailValue}>{item.artName || item.artCategory || "N/A"}</Text>
@@ -297,12 +297,14 @@
 import api from "@/src/services/api";
 import { Ionicons } from "@expo/vector-icons";
 import { useLocalSearchParams, useNavigation } from "expo-router";
-import React from "react";
 import {
-  Alert, ScrollView, Share, StyleSheet,
+  Alert,
+  ScrollView,
+  Share,
+  StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -311,56 +313,52 @@ export default function MoreInformation() {
   const params = useLocalSearchParams();
   const item = params.item ? JSON.parse(params.item as string) : {};
 
-const shareHandler = async () => {
-  try {
-    const message = `
+  const shareHandler = async () => {
+    try {
+      const message = `
 ✨ *${item.purpose || item.title || "Opportunity"}* ✨
 
 📜 Description:
 ${item.description || "No description available."}
 
 📍 Location: ${item.location || "N/A"}
-💰 Budget: ${item.budget ? `₹${item.budget.toLocaleString('en-IN')}` : "N/A"}
+💰 Budget: ${item.budget ? `₹${item.budget.toLocaleString("en-IN")}` : "N/A"}
 📅 Due Date: ${item.applicationPeriod?.end ? new Date(item.applicationPeriod.end).toLocaleDateString() : "N/A"}
 
 👉 Check out more details in the app!
 `;
 
-    await Share.share({
-      message,
-    });
-  } catch (error) {
-    alert("Failed to share the opportunity. Please try again.");
-  }
-};
-
-const handleSaveOpportunity = async () => {
- 
-//  setLoading(true);
-  try {
-    const res = await api.post(
-      `/artists/saved-opportunities/${item._id}`
-    );
-
-    Alert.alert("Success", res.data?.message || "Opportunity saved successfully");
-    // router.replace("/SignIn");
-  } catch (error: any) {
-    if (error.response) {
-      Alert.alert(
-        "Error",
-        error.response.data?.message || "Failed to save opportunity"
-      );
-    } else {
-      Alert.alert(
-        "Error",
-        error.message || "An unexpected error occurred"
-      );
+      await Share.share({
+        message,
+      });
+    } catch (error) {
+      alert("Failed to share the opportunity. Please try again.");
     }
-  } finally {
-   // setLoading(false);
-  }
-};
+  };
 
+  const handleSaveOpportunity = async () => {
+    //  setLoading(true);
+    try {
+      const res = await api.post(`/artists/saved-opportunities/${item._id}`);
+
+      Alert.alert(
+        "Success",
+        res.data?.message || "Opportunity saved successfully",
+      );
+      // router.replace("/SignIn");
+    } catch (error: any) {
+      if (error.response) {
+        Alert.alert(
+          "Error",
+          error.response.data?.message || "Failed to save opportunity",
+        );
+      } else {
+        Alert.alert("Error", error.message || "An unexpected error occurred");
+      }
+    } finally {
+      // setLoading(false);
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -374,29 +372,43 @@ const handleSaveOpportunity = async () => {
 
         {/* Title Section */}
         <View style={styles.titleSection}>
-          <Text style={styles.title}>{item.purpose || item.title || "Opportunity Title"}</Text>
-          
+          <Text style={styles.title}>
+            {item.purpose || item.title || "Opportunity Title"}
+          </Text>
+
           <View style={styles.actionButtons}>
-            <TouchableOpacity style={styles.saveBtn} onPress={handleSaveOpportunity}>
+            <TouchableOpacity
+              style={styles.saveBtn}
+              onPress={handleSaveOpportunity}
+            >
               <Text style={styles.saveBtnText}>Save</Text>
             </TouchableOpacity>
-           <TouchableOpacity style={styles.shareBtn} onPress={shareHandler}>
-  <Text style={styles.shareBtnText}>Share</Text>
-</TouchableOpacity>
-
+            <TouchableOpacity style={styles.shareBtn} onPress={shareHandler}>
+              <Text style={styles.shareBtnText}>Share</Text>
+            </TouchableOpacity>
           </View>
         </View>
 
         {/* Meta Information */}
         <View style={styles.metaSection}>
-          <Text style={styles.metaText}>Category: {item.artForm || item.artCategory || "N/A"}</Text>
           <Text style={styles.metaText}>
-            Posted On: {item.applicationPeriod?.start ? new Date(item.applicationPeriod.start).toLocaleDateString() : "N/A"}
+            Category: {item.artForm || item.artCategory || "N/A"}
           </Text>
           <Text style={styles.metaText}>
-            Due Date: {item.applicationPeriod?.end ? new Date(item.applicationPeriod.end).toLocaleDateString() : "N/A"}
+            Posted On:{" "}
+            {item.applicationPeriod?.start
+              ? new Date(item.applicationPeriod.start).toLocaleDateString()
+              : "N/A"}
           </Text>
-          <Text style={styles.metaText}>Opening: {item.numberOfOpenings || "N/A"}</Text>
+          <Text style={styles.metaText}>
+            Due Date:{" "}
+            {item.applicationPeriod?.end
+              ? new Date(item.applicationPeriod.end).toLocaleDateString()
+              : "N/A"}
+          </Text>
+          <Text style={styles.metaText}>
+            Opening: {item.numberOfOpenings || "N/A"}
+          </Text>
         </View>
 
         {/* Description */}
@@ -409,16 +421,22 @@ const handleSaveOpportunity = async () => {
 
         {/* Roles, Skills and Other Information */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Roles, Skills and Other Information</Text>
-          
+          <Text style={styles.sectionTitle}>
+            Roles, Skills and Other Information
+          </Text>
+
           <View style={styles.detailRow}>
             <Text style={styles.detailLabel}>Nature of art:</Text>
-            <Text style={styles.detailValue}>{item.artForm || item.artName || item.artCategory || "N/A"}</Text>
+            <Text style={styles.detailValue}>
+              {item.artForm || item.artName || item.artCategory || "N/A"}
+            </Text>
           </View>
 
           <View style={styles.detailRow}>
             <Text style={styles.detailLabel}>Expertise:</Text>
-            <Text style={styles.detailValue}>{item.skills?.join(", ") || "N/A"}</Text>
+            <Text style={styles.detailValue}>
+              {item.skills?.join(", ") || "N/A"}
+            </Text>
           </View>
 
           <View style={styles.detailRow}>
@@ -429,13 +447,17 @@ const handleSaveOpportunity = async () => {
           <View style={styles.detailRow}>
             <Text style={styles.detailLabel}>Language:</Text>
             <Text style={styles.detailValue}>
-              {Array.isArray(item.languages) ? item.languages.join(", ") : item.languages || "N/A"}
+              {Array.isArray(item.languages)
+                ? item.languages.join(", ")
+                : item.languages || "N/A"}
             </Text>
           </View>
 
           <View style={styles.detailRow}>
             <Text style={styles.detailLabel}>Amount:</Text>
-            <Text style={styles.detailValue}>{item.budget ? `${item.budget} INR` : "N/A"}</Text>
+            <Text style={styles.detailValue}>
+              {item.budget ? `${item.budget} INR` : "N/A"}
+            </Text>
           </View>
 
           <View style={styles.detailRow}>
@@ -445,44 +467,60 @@ const handleSaveOpportunity = async () => {
 
           <View style={styles.detailRow}>
             <Text style={styles.detailLabel}>Performance Time:</Text>
-            <Text style={styles.detailValue}>{item.performanceTime || "N/A"}</Text>
+            <Text style={styles.detailValue}>
+              {item.performanceTime || "N/A"}
+            </Text>
           </View>
 
           <View style={styles.detailRow}>
             <Text style={styles.detailLabel}>Duration of Performance:</Text>
-            <Text style={styles.detailValue}>{item.performanceDuration || item.duration || "N/A"}</Text>
+            <Text style={styles.detailValue}>
+              {item.performanceDuration || item.duration || "N/A"}
+            </Text>
           </View>
 
           <View style={styles.detailRow}>
             <Text style={styles.detailLabel}>Performance Date:</Text>
             <Text style={styles.detailValue}>
-              {item.performanceDate ? new Date(item.performanceDate).toLocaleDateString() : "N/A"}
+              {item.performanceDate
+                ? new Date(item.performanceDate).toLocaleDateString()
+                : "N/A"}
             </Text>
           </View>
 
           <View style={styles.detailRow}>
             <Text style={styles.detailLabel}>Performance Type:</Text>
-            <Text style={styles.detailValue}>{item.performanceType || "N/A"}</Text>
+            <Text style={styles.detailValue}>
+              {item.performanceType || "N/A"}
+            </Text>
           </View>
 
           <View style={styles.detailRow}>
             <Text style={styles.detailLabel}>Live / Recorded:</Text>
-            <Text style={styles.detailValue}>{item.performanceMode || item.liveRecorded || "N/A"}</Text>
+            <Text style={styles.detailValue}>
+              {item.performanceMode || item.liveRecorded || "N/A"}
+            </Text>
           </View>
 
           <View style={styles.detailRow}>
             <Text style={styles.detailLabel}>Level of Artist:</Text>
-            <Text style={styles.detailValue}>{item.experienceLevel || item.artistLevel || "N/A"}</Text>
+            <Text style={styles.detailValue}>
+              {item.experienceLevel || item.artistLevel || "N/A"}
+            </Text>
           </View>
 
           <View style={styles.detailRow}>
             <Text style={styles.detailLabel}>Posted By:</Text>
-            <Text style={styles.detailValue}>{item.organizer?.name || item.postedBy || "N/A"}</Text>
+            <Text style={styles.detailValue}>
+              {item.organizer?.name || item.postedBy || "N/A"}
+            </Text>
           </View>
 
           <View style={styles.detailRow}>
             <Text style={styles.detailLabel}>Number of Openings:</Text>
-            <Text style={styles.detailValue}>{item.numberOfOpenings || "N/A"}</Text>
+            <Text style={styles.detailValue}>
+              {item.numberOfOpenings || "N/A"}
+            </Text>
           </View>
         </View>
 
@@ -504,7 +542,11 @@ const handleSaveOpportunity = async () => {
         <View style={styles.bottomSection}>
           <TouchableOpacity
             style={styles.applyBtn}
-            onPress={() => (navigation as any).navigate("ApplyScreen", { item: JSON.stringify(item) })}
+            onPress={() =>
+              (navigation as any).navigate("ApplyScreen", {
+                item: JSON.stringify(item),
+              })
+            }
           >
             <Text style={styles.applyBtnText}>Apply Now</Text>
           </TouchableOpacity>

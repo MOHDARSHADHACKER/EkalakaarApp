@@ -605,7 +605,7 @@ const ProfileRow = ({ label, value }: any) => (
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#fff", padding: 12 },
   center: { alignItems: "center", marginVertical: 20 },
-  avatarWrapper: { position: "relative", marginBottom: 10 },
+  avatarWrapper: { position: "relative", marginBottom: 10, marginTop: 10 },
   avatar: {
     width: 120,
     height: 120,

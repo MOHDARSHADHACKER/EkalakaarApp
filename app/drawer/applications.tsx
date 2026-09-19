@@ -8,6 +8,7 @@ import {
   ActivityIndicator,
   Alert,
   FlatList,
+  Image,
   ScrollView,
   StyleSheet,
   Text,
@@ -18,6 +19,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import BottomTabBar from "../../components/BottomTabBar";
 import api from "../../src/services/api";
 
+import image from "../../assets/images/image.png";
 // Tabs exactly like web
 const tabs = ["Saved", "Applied", "In Progress", "Hired", "Declined"];
 
@@ -202,7 +204,12 @@ const EmptyListMessage = ({
 
   return (
     <View style={styles.emptyWrapper}>
-      <View style={cardStyles.customPlaceholder} />
+      {/* <View style={cardStyles.customPlaceholder} /> */}
+      <Image
+        source={image}
+        style={cardStyles.customPlaceholder}
+        resizeMode="contain"
+      />
       <Text style={styles.emptyTitle}>Oops!</Text>
       <Text style={styles.emptyDesc}>{description}</Text>
       <TouchableOpacity
@@ -573,12 +580,19 @@ const cardStyles = StyleSheet.create({
     fontSize: 12,
     fontWeight: "600",
   },
+  // separator: { height: 1, backgroundColor: "#eee", marginBottom: 10 },
+  // customPlaceholder: {
+  //   width: 160,
+  //   height: 160,
+  //   backgroundColor: "#f5f5f5",
+  //   borderRadius: 8,
+  //   marginBottom: 20,
+  // },
   separator: { height: 1, backgroundColor: "#eee", marginBottom: 10 },
   customPlaceholder: {
-    width: 160,
-    height: 160,
-    backgroundColor: "#f5f5f5",
+    width: 100,
+    height: 100,
     borderRadius: 8,
-    marginBottom: 20,
+    marginBottom: 0,
   },
 });

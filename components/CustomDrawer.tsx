@@ -358,7 +358,7 @@ export default function CustomDrawer(props: any) {
 const styles = StyleSheet.create({
   profileSection: {
     backgroundColor: "#AD2F3B",
-    paddingVertical: 30,
+    paddingVertical: 50,
     alignItems: "center",
   },
   avatar: {
@@ -392,6 +392,7 @@ const styles = StyleSheet.create({
     margin: 16,
     paddingVertical: 12,
     borderRadius: 10,
+    marginBottom: 50,
   },
   logoutText: {
     color: "#AD2F3B",
