@@ -1039,6 +1039,20 @@ export default function EditBasicProfile() {
     },
   });
 
+
+  interface UserData {
+    role: string;
+    profileCompleted: boolean;
+    isVerified: boolean;
+    name: string;
+    email: string;
+    isBlocked: boolean;
+    isAproved: boolean;
+    id: string;
+    accessToken: string;
+    refreshToken: string;
+  }
+
   // Fetch profile data on mount
   useEffect(() => {
     fetchProfileData();
@@ -1048,9 +1062,14 @@ export default function EditBasicProfile() {
     try {
       setLoading(true);
       const token = await AsyncStorage.getItem("accessToken");
+      const userDataString = await AsyncStorage.getItem("userData");
+
+      const userData: UserData | null = userDataString
+        ? JSON.parse(userDataString)
+        : null;
 
       const response = await fetch(
-        "https://api.ekalakaar.com/api/v1/artists/profile/69cd062aed280923ebfe8666",
+        `https://api.ekalakaar.com/api/v1/artists/profile/${userData?.id}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         },

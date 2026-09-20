@@ -1,7 +1,6 @@
-import { Ionicons, FontAwesome } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useRouter } from "expo-router";
 import React, { useState } from "react";
-import api from "../src/services/api"; 
 import {
   ActivityIndicator,
   Alert,
@@ -12,7 +11,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useRouter } from "expo-router";
+import api from "../src/services/api";
 
 export default function SignIn() {
   const [email, setEmail] = useState("");
@@ -116,6 +115,9 @@ export default function SignIn() {
       await AsyncStorage.setItem("role", role);
       if (user) {
         await AsyncStorage.setItem("userData", JSON.stringify(user));
+      }else{
+        const userData = data?.data || {}; // Create a user object if not present
+        await AsyncStorage.setItem("userData", JSON.stringify(userData)); 
       }
 
       Alert.alert("Success", "Login successful!");

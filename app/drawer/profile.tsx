@@ -320,6 +320,19 @@ export default function Profile() {
   const [avatar, setAvatar] = useState<string | null>(null);
   const [refreshing, setRefreshing] = useState(false);
 
+  interface UserData {
+    role: string;
+    profileCompleted: boolean;
+    isVerified: boolean;
+    name: string;
+    email: string;
+    isBlocked: boolean;
+    isAproved: boolean;
+    id: string;
+    accessToken: string;
+    refreshToken: string;
+  }
+
   useEffect(() => {
     fetchProfile();
   }, []);
@@ -329,8 +342,14 @@ export default function Profile() {
     try {
       setLoading(true);
       const token = await AsyncStorage.getItem("accessToken");
+      const userDataString = await AsyncStorage.getItem("userData");
+
+      const userData: UserData | null = userDataString
+        ? JSON.parse(userDataString)
+        : null;
 
       console.log("🔑 Token being sent:", token); // 👈 ye line add karo
+      console.log("👤 User ID:", userData);
 
       if (!token) {
         Alert.alert("Error", "⚠️ No access token found, please login again");
@@ -346,7 +365,7 @@ export default function Profile() {
       // "http://192.168.1.24:4000/api/v1/artists/profile/userid",
 
       const res = await fetch(
-        "https://api.ekalakaar.com/api/v1/artists/profile/69cd062aed280923ebfe8666",
+        `https://api.ekalakaar.com/api/v1/artists/profile/${userData?.id}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         },
