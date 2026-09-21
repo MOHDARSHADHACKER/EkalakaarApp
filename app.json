@@ -8,11 +8,9 @@
     "scheme": "stickersmash",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
-
     "ios": {
       "supportsTablet": true
     },
-
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
@@ -24,27 +22,24 @@
       "predictiveBackGestureEnabled": false,
       "package": "com.ekalakaar.StickerSmash"
     },
-
     "web": {
       "output": "static",
       "favicon": "./assets/images/favicon.png"
     },
-
     "plugins": [
       "expo-router",
       "expo-web-browser"
     ],
-
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
     },
-
     "extra": {
       "router": {},
       "eas": {
-        "projectId": "14cf8cc0-37c5-4370-acdd-053b628e0261"
+        "projectId": "7f51857a-6a1f-4c1d-8496-fe7f6ca68d18"
       }
-    }
+    },
+    "owner": "azizrahman987"
   }
 }
