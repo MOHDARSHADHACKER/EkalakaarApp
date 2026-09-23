@@ -20,7 +20,7 @@
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
-      "package": "com.ekalakaar.StickerSmash"
+      "package": "com.ekalakaar.mobile"
     },
     "web": {
       "output": "static",
