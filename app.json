@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Ekalakaar",
-    "slug": "StickerSmash",
+    "slug": "ekalakaar",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -20,7 +20,7 @@
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
-      "package": "com.ekalakaar.mobile"
+      "package": "com.ekalakaar.mobileapp"
     },
     "web": {
       "output": "static",
@@ -39,7 +39,7 @@
     "extra": {
       "router": {},
       "eas": {
-        "projectId": "7f51857a-6a1f-4c1d-8496-fe7f6ca68d18"
+        "projectId": "11309c37-6f88-44f4-a4ba-d6745e2734d6"
       }
     },
     "owner": "azizrahman987"
