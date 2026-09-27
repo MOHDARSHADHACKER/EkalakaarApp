@@ -73,7 +73,7 @@
 //         </ScrollView>
 //       </DrawerContentScrollView>
 
-//       {/* Logout Button */}
+//       {/*  Button */}
 //       <TouchableOpacity style={styles.logoutBtn} onPress={() => console.log("Logout")}>
 //         <Ionicons name="log-out-outline" size={20} color="#b91c1c" />
 //         <Text style={styles.logoutText}>Log Out</Text>
@@ -120,6 +120,15 @@
 //   },
 // });
 
+
+
+
+
+
+
+
+
+
 import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { DrawerContentScrollView } from "@react-navigation/drawer";
@@ -139,6 +148,19 @@ export default function CustomDrawer(props: any) {
   const [userEmail, setUserEmail] = useState("");
   const [avatar, setAvatar] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+
+  interface UserData {
+    role: string;
+    profileCompleted: boolean;
+    isVerified: boolean;
+    name: string;
+    email: string;
+    isBlocked: boolean;
+    isAproved: boolean;
+    id: string;
+    accessToken: string;
+    refreshToken: string;
+  }
 
   useEffect(() => {
     fetchUserData();
@@ -162,9 +184,14 @@ export default function CustomDrawer(props: any) {
       //     },
       //   },
       // );
-
+      const userDataString = await AsyncStorage.getItem("userData");
+         const userData: UserData | null = userDataString
+        ? JSON.parse(userDataString)
+        : null;
+        console.log(userData, "userData");
+        
       const response = await fetch(
-        "https://api.ekalakaar.com/api/v1/artists/profile/69cd062aed280923ebfe8666",
+        `https://api.ekalakaar.com/api/v1/artists/profile/${userData?.id}`,
         {
           method: "GET",
           headers: {
@@ -401,3 +428,5 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
 });
+
+
