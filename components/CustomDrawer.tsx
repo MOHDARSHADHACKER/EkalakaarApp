@@ -202,7 +202,6 @@ export default function CustomDrawer(props: any) {
 
       const data = await response.json();
 
-      console.log("Response Status:", response.status);
       console.log("API Data:", data);
       console.log("First Name:", data?.data?.personalInfo?.firstName);
 
